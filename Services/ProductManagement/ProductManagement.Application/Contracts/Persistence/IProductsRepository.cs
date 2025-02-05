@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace ProductManagement.Application.Contracts.Persistence
 {
-    public interface IProductsRepository: IAsyncRepository<Product>
+    public interface IProductsRepository: IGenericRepository<Product>
     {
-        Task<IEnumerable<Product>> GetOrdersByUserName(string userName);
+        Task<List<Product>> GetAllProducts();
+        Task<Product> GetAllProductsById(int id);
     }
 }

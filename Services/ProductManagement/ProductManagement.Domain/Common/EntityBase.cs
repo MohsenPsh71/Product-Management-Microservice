@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProductManagement.Domain.Common
 {
-    public class EntityBase
+    public abstract class EntityBase
     {
         public int Id { get; set; }
 
@@ -14,7 +14,7 @@ namespace ProductManagement.Domain.Common
 
         public DateTime CreateDate { get; set; }
 
-        public string? LastModifiedBy { get; set; } = "mohsen";
+        public string? LastModifiedBy { get; set; }
 
         public DateTime? ModifiedDate { get; set; }
     }
