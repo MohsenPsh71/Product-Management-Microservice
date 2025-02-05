@@ -15,9 +15,4 @@
     <ProjectReference Include="..\ProductManagement.Domain\ProductManagement.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Products\Handlers\Commands\" />
-    <Folder Include="Features\Products\Handlers\Queries\" />
-  </ItemGroup>
-
 </Project>
