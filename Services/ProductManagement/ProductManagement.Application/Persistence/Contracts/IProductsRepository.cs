@@ -5,6 +5,6 @@ namespace ProductManagement.Application.Contracts.Persistence
     public interface IProductsRepository: IGenericRepository<Product>
     {
         Task<List<Product>> GetAllProducts();
-        Task<Product> GetAllProductsById(int id);
+        Task<Product> GetAllProductsById(Guid id);
     }
 }
