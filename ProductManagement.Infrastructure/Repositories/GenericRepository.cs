@@ -1,32 +1,46 @@
-﻿using ProductManagement.Application.Contracts.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using ProductManagement.Application.Contracts.Persistence;
+using ProductManagement.Infrastructure.Persistence;
 
 namespace ProductManagement.Infrastructure.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        public Task<T> AddAsync(T entity)
+        private readonly ProductManagementDbContext _context;
+
+        public GenericRepository(ProductManagementDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
-            throw new NotImplementedException();
+            await _context.AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
-        public Task<IReadOnlyList<T>> GetAllAsync()
+        public async Task DeleteAsync(T entity)
         {
-            throw new NotImplementedException();
+            _context.Set<T>().Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<T> GetByIdAsync(Guid id)
+        public async Task<IReadOnlyList<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>().ToListAsync();
         }
 
-        public Task UpdateAsync(T entity)
+        public async Task<T> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var entity = await _context.Set<T>().FindAsync(id);
+            return entity;
+        }
+
+        public async Task UpdateAsync(T entity)
+        {
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

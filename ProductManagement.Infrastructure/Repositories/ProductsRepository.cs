@@ -1,18 +1,28 @@
-﻿using ProductManagement.Application.Contracts.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using ProductManagement.Application.Contracts.Persistence;
 using ProductManagement.Domain.Entities;
+using ProductManagement.Infrastructure.Persistence;
 
 namespace ProductManagement.Infrastructure.Repositories
 {
     public class ProductsRepository : GenericRepository<Product>, IProductsRepository
     {
-        public Task<List<Product>> GetAllProducts()
+        private readonly ProductManagementDbContext _dbContext;
+        public ProductsRepository(ProductManagementDbContext dbContext) : base(dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
         }
 
-        public Task<Product> GetAllProductsById(Guid id)
+        public async Task<List<Product>> GetAllProducts()
         {
-            throw new NotImplementedException();
+            var products = await _dbContext.Product.ToListAsync();
+            return products;
+        }
+
+        public async Task<Product> GetAllProductsById(Guid id)
+        {
+            var products = await _dbContext.Product.FirstOrDefaultAsync(l => l.Id == id);
+            return products;
         }
     }
 }
