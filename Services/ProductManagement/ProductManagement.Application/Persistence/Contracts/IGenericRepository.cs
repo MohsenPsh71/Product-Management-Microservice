@@ -1,7 +1,4 @@
-﻿using ProductManagement.Domain.Common;
-using System.Linq.Expressions;
-
-namespace ProductManagement.Application.Contracts.Persistence
+﻿namespace ProductManagement.Application.Contracts.Persistence
 {
     public interface IGenericRepository<T> where T : class
     {
