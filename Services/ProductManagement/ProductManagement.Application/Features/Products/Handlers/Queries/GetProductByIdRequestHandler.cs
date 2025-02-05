@@ -6,7 +6,7 @@ using ProductManagement.Domain.Entities;
 
 namespace ProductManagement.Application.Features.Products.Handlers.Queries
 {
-    public class GetProductByIdRequestHandler : IRequestHandler<GetProductByIdRequest, List<Product>>
+    public class GetProductByIdRequestHandler : IRequestHandler<GetProductByIdRequest, Product>
     {
         private readonly IProductsRepository _productsRepository;
         private readonly IMapper _mapper;
@@ -16,11 +16,11 @@ namespace ProductManagement.Application.Features.Products.Handlers.Queries
             _productsRepository = productsRepository;
             _mapper = mapper;
         }
-        public async Task<List<Product>> Handle(GetProductByIdRequest request, CancellationToken cancellationToken)
+        public async Task<Product> Handle(GetProductByIdRequest request, CancellationToken cancellationToken)
         {
             var Product = await _productsRepository
                .GetAllProductsById(request.Id);
-            return _mapper.Map<List<Product>>(Product);
+            return _mapper.Map<Product>(Product);
         }
     }
 }

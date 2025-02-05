@@ -19,9 +19,9 @@ namespace ProductManagement.Application.Features.Products.Handlers.Queries
 
         public async Task<List<Product>> Handle(GetAllProductsRequest request, CancellationToken cancellationToken)
         {
-            var Product = await _productsRepository
+            var Products = await _productsRepository
                .GetAllProducts();
-            return _mapper.Map<List<Product>>(Product);
+            return _mapper.Map<List<Product>>(Products);
         }
     }
 }
