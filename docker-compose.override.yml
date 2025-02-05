@@ -1,0 +1,28 @@
+services:
+  
+  productmanagementdb:
+     container_name: productmanagementdb
+     hostname: productmanagementdb
+     environment:
+      ACCEPT_EULA: 'Y'
+      MSSQL_SA_PASSWORD: 'Passw0rd'
+      MSSQL_DATA_DIR: /var/opt/mssql/data
+      MSSQL_PID: 'Developer' 
+      MSSQL_TCP_PORT: 1433 
+     ports: 
+      - "1433:1433"
+     volumes:
+      - ./data:/var/opt/mssql/data
+      - ./log:/var/opt/mssql/log
+      - ./secrets:/var/opt/mssql/secrets
+
+  productmanagement.api:
+    container_name: productmanagement.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - "ConnectionStrings:ProductManagementConnectionString=Server=productmanagementdb;Database=ProductManagementDb;User Id=sa;Password=Passw0rd;Encrypt=true;TrustServerCertificate=yes"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - productmanagementdb

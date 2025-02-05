@@ -1,0 +1,15 @@
+services:
+  
+  productmanagementdb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
+  productmanagement.api:
+    image: ${DOCKER_REGISTRY-}productmanagementapi
+    build:
+      context: .
+      dockerfile: Services/ProductManagement/ProductManagement.Api/Dockerfile
+
+volumes:
+  data:
+  log:
+  secrets:
