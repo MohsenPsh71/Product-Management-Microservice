@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using ProductManagement.Application.Contracts.Persistence;
 using ProductManagement.Application.Features.Products.Requests.Queries;
 using ProductManagement.Domain.Entities;
 
@@ -6,9 +8,19 @@ namespace ProductManagement.Application.Features.Products.Handlers.Queries
 {
     public class GetProductByIdRequestHandler : IRequestHandler<GetProductByIdRequest, List<Product>>
     {
-        public Task<List<Product>> Handle(GetProductByIdRequest request, CancellationToken cancellationToken)
+        private readonly IProductsRepository _productsRepository;
+        private readonly IMapper _mapper;
+
+        public GetProductByIdRequestHandler(IProductsRepository productsRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _productsRepository = productsRepository;
+            _mapper = mapper;
+        }
+        public async Task<List<Product>> Handle(GetProductByIdRequest request, CancellationToken cancellationToken)
+        {
+            var Product = await _productsRepository
+               .GetAllProductsById(request.Id);
+            return _mapper.Map<List<Product>>(Product);
         }
     }
 }
