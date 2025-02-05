@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ProductManagement.Domain.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProductManagement.Domain.Entities
 {
-    public class Product
+    public class Product:EntityBase
     {
         [Key]
         public int Id { get; set; }
